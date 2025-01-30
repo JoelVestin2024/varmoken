@@ -47,6 +47,15 @@ nav a:hover {
   color: #fff;
 }
 
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  padding: 8px 15px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
 footer {
   background-color: #3E2723;
   color: #F4E1C1;
