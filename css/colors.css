@@ -43,9 +43,13 @@ a:focus,
 .nav-item .dropdown-item a.active {
   color: white;
 }
+
+/*
 .nav-link {
   color: rgb(231, 231, 231);
 }
+*/
+
 .nav-link:hover,
 .nav-link:focus {
   color: rgb(231, 231, 231);
@@ -96,8 +100,6 @@ a:active,
   color: #fffeff;
 }
 
-
-/* ---------- Color Form ----------- */
 
 [dir="rtl"] .color-form .color-palette {
   margin-left: 0;
