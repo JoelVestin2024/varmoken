@@ -1,278 +1,352 @@
-  {{ attach_library('varmoken/global-styling') }}
+{{ attach_library('varmoken/global-styling') }}
 
-  <style>
-    :root {
-      --oek-sand: #f5e6c4;
-      --oek-terra: #d97746;
-      --oek-koppar: #b35c1e;
-      --oek-mörkbrun: #4a2e0b;
-      --oek-terracotta-light: #e29a6c;
-      --oek-terracotta-dark: #8a4b1e;
-      --oek-vit: #fff8f0;
-      --oek-mörkgrå: #3b2f2f;
-    }
+<style>
+  :root {
+    --oek-sand: #f5e6c4;
+    --oek-terra: #d97746;
+    --oek-koppar: #b35c1e;
+    --oek-mörkbrun: #4a2e0b;
+    --oek-terracotta-light: #e29a6c;
+    --oek-terracotta-dark: #8a4b1e;
+    --oek-vit: #fff8f0;
+    --oek-mörkgrå: #3b2f2f;
+  }
 
-    body, html {
-      margin: 0; padding: 0;
-      font-family: 'Merriweather', serif, Georgia, 'Times New Roman', serif;
-      background-color: var(--oek-vit);
-      color: var(--oek-mörkbrun);
-      height: 100%;
-    }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Merriweather', serif;
+    background-color: var(--oek-vit);
+    color: var(--oek-mörkbrun);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    header.topbar {
-      background-color: var(--oek-mörkbrun);
+  header.topbar {
+    background-color: var(--oek-mörkbrun);
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 1.2rem;
+    gap: 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 20;
+    left: 0;
+    right: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .logo {
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: var(--oek-terra);
+    cursor: pointer;
+    user-select: none;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-family: 'Cinzel', serif;
+  }
+
+  form.search-bar {
+    flex: 1;
+    display: flex;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(179,92,30,0.8);
+    background: var(--oek-sand);
+    max-width: 700px;
+  }
+
+  form.search-bar select,
+  form.search-bar input[type="text"],
+  form.search-bar button {
+    border: none;
+    font-family: 'Cinzel', serif;
+  }
+
+  form.search-bar select {
+    background: var(--oek-terra);
+    padding: 0 14px;
+    color: var(--oek-vit);
+    font-weight: 700;
+  }
+
+  form.search-bar input[type="text"] {
+    flex: 1;
+    padding: 0.55rem 1rem;
+    font-size: 1rem;
+    font-family: 'Merriweather', serif;
+  }
+
+  form.search-bar input::placeholder {
+    color: #a47858;
+  }
+
+  form.search-bar button {
+    background-color: var(--oek-terra);
+    padding: 0 1.4rem;
+    color: var(--oek-vit);
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    transition: background-color 0.3s ease;
+  }
+
+  form.search-bar button:hover {
+    background-color: var(--oek-terracotta-light);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+  }
+
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background: var(--oek-sand);
+    border-radius: 2px;
+  }
+
+  nav.main-menu {
+    background-color: var(--oek-koppar);
+    padding: 0.5rem 1.2rem;
+    display: flex;
+    gap: 2rem;
+    position: fixed;
+    top: 52px;
+    width: 100%;
+    z-index: 19;
+    font-weight: 700;
+    font-size: 1rem;
+    user-select: none;
+    font-family: 'Cinzel', serif;
+    justify-content: center;
+    left: 0;
+    right: 0;
+    transition: max-height 0.3s ease;
+  }
+
+  nav.main-menu a {
+    color: var(--oek-vit);
+    text-decoration: none;
+    padding: 0.25rem 0.7rem;
+    border-radius: 4px;
+  }
+
+  nav.main-menu a:hover {
+    background-color: var(--oek-terracotta-dark);
+  }
+
+  .hero-section {
+    width: 100%;
+    position: relative;
+    min-height: 100vh;
+    height: auto;
+    padding: 4rem 1rem;
+    margin-top: 92px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Cinzel', serif;
+  }
+
+  .hero-video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.65) contrast(1.2);
+    z-index: -1;
+  }
+
+  .hero-overlay {
+    opacity: 0;
+    animation: fadeIn 2s ease-in forwards;
+    text-align: center;
+    padding: 1rem;
+    color: var(--oek-sand);
+    text-shadow: 0 0 15px rgba(75, 46, 11, 0.9);
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .hero-overlay h1 {
+    font-size: 4.5rem;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-overlay p {
+    font-size: 1.7rem;
+    font-style: italic;
+    color: var(--oek-terracotta-dark);
+  }
+
+  .cta-button {
+    background-color: var(--oek-terra);
+    color: var(--oek-sand);
+    padding: 1.1rem 3.2rem;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 900;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(211, 119, 70, 0.75);
+    letter-spacing: 0.12em;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+
+  .cta-button:hover {
+    background-color: var(--oek-terracotta-light);
+    box-shadow: 0 8px 24px rgba(226, 154, 108, 0.9);
+  }
+
+  main#main-content {
+    max-width: 1100px;
+    margin: 3rem auto 4rem;
+    padding: 2.5rem 3rem;
+    background-color: var(--oek-sand);
+    color: var(--oek-mörkbrun);
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(179, 92, 30, 0.15);
+    text-align: center;
+    font-family: 'Merriweather', serif;
+  }
+
+  footer.site-footer {
+    width: 100%;
+    text-align: center;
+    padding: 1.7rem 1rem;
+    background-color: var(--oek-mörkbrun);
+    color: var(--oek-sand);
+    font-family: 'Cinzel', serif;
+  }
+
+  /* Responsivitet */
+  @media (max-width: 768px) {
+    .hamburger {
       display: flex;
-      align-items: center;
-      padding: 0.6rem 1.2rem;
-      gap: 1rem;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 20;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    .logo {
-      font-weight: 900;
-      font-size: 1.6rem;
-      color: var(--oek-terra);
-      cursor: pointer;
-      user-select: none;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      white-space: nowrap;
-      font-family: 'Cinzel', serif;
-    }
-
-    form.search-bar {
-      flex: 1;
-      display: flex;
-      border-radius: 5px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(179,92,30,0.8);
-      background: var(--oek-sand);
-    }
-
-    form.search-bar select {
-      background: var(--oek-terra);
-      border: none;
-      padding: 0 14px;
-      color: var(--oek-vit);
-      font-weight: 700;
-      cursor: pointer;
-      user-select: none;
-      font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
-    }
-
-    form.search-bar input[type="text"] {
-      flex: 1;
-      border: none;
-      padding: 0.55rem 1rem;
-      font-size: 1rem;
-      font-family: 'Merriweather', serif;
-      color: var(--oek-mörkbrun);
-    }
-
-    form.search-bar input[type="text"]::placeholder {
-      color: #a47858;
-      font-style: italic;
-    }
-
-    form.search-bar button {
-      background-color: var(--oek-terra);
-      border: none;
-      padding: 0 1.4rem;
-      cursor: pointer;
-      font-weight: 700;
-      color: var(--oek-vit);
-      font-family: 'Cinzel', serif;
-      transition: background-color 0.3s ease;
-      letter-spacing: 0.1em;
-    }
-
-    form.search-bar button:hover {
-      background-color: var(--oek-terracotta-light);
+      margin-left: auto;
     }
 
     nav.main-menu {
-      background-color: var(--oek-koppar);
-      padding: 0.5rem 1.2rem;
-      display: flex;
-      gap: 2rem;
-      position: fixed;
-      top: 52px; /* topbar höjd */
-      width: 100%;
-      z-index: 19;
-      font-weight: 700;
-      font-size: 1rem;
-      user-select: none;
-      font-family: 'Cinzel', serif;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-    }
-
-    nav.main-menu a {
-      color: var(--oek-vit);
-      text-decoration: none;
-      padding: 0.25rem 0.7rem;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-
-    nav.main-menu a:hover {
-      background-color: var(--oek-terracotta-dark);
-      color: var(--oek-sand);
-    }
-
-    .hero-section {
-      position: relative;
-      height: 100vh;
-      margin-top: 92px;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 0;
       overflow: hidden;
-      font-family: 'Cinzel', serif;
     }
 
-    .hero-video {
-      position: absolute;
-      top: 0; left: 0;
-      self-align: center;
+    nav.main-menu.active {
+      max-height: 200px;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+    }
+
+    form.search-bar {
+      flex-direction: column;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.65) contrast(1.2);
-      z-index: -1;
     }
 
-    .hero-overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      max-width: 90%;
-      padding: 0 1.2rem;
-      color: var(--oek-sand);
-      text-shadow: 0 0 15px rgba(75, 46, 11, 0.9);
+    form.search-bar select,
+    form.search-bar input[type="text"],
+    form.search-bar button {
+      width: 100%;
+      padding: 0.8rem;
     }
 
     .hero-overlay h1 {
-      font-size: 4.5rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      margin-bottom: 0.8rem;
-    }
-
-    .hero-overlay p {
-      font-size: 1.7rem;
-      margin-bottom: 2.2rem;
-      font-style: italic;
-      font-weight: 600;
-      color: var(--oek-terracotta-light);
-    }
-
-    .cta-button {
-      background-color: var(--oek-terra);
-      color: var(--oek-sand);
-      padding: 1.1rem 3.2rem;
-      font-size: 1.3rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 900;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 6px 16px rgba(211, 119, 70, 0.75);
+      font-size: 2.2rem;
       letter-spacing: 0.12em;
     }
 
-    .cta-button:hover {
-      background-color: var(--oek-terracotta-light);
-      box-shadow: 0 8px 24px rgba(226, 154, 108, 0.9);
+    .hero-overlay p {
+      font-size: 1.1rem;
+    }
+
+    .cta-button {
+      font-size: 1rem;
+      padding: 0.8rem 2rem;
     }
 
     main#main-content {
-      padding: 2.5rem 3rem;
-      background-color: var(--oek-sand);
-      color: var(--oek-mörkbrun);
-      max-width: 1100px;
-      margin: 3rem auto 4rem;
-      border-radius: 14px;
-      box-shadow: 0 8px 20px rgba(179, 92, 30, 0.15);
-      font-family: 'Merriweather', serif;
-      line-height: 1.65;
+      margin: 2rem 1rem;
+      padding: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .hero-overlay h1 {
+      font-size: 5rem;
     }
 
-    footer.site-footer {
-      text-align: center;
-      padding: 1.7rem 1rem;
-      background-color: var(--oek-mörkbrun);
-      color: var(--oek-sand);
-      font-size: 0.95rem;
-      letter-spacing: 0.07em;
-      font-family: 'Cinzel', serif;
-      user-select: none;
+    .cta-button {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger');
+    const menu = document.querySelector('nav.main-menu');
+
+    function toggleMenu() {
+      menu.classList.toggle('active');
     }
 
-    @media (max-width: 768px) {
-      header.topbar {
-        flex-wrap: wrap;
-        gap: 0.6rem;
+    hamburger.addEventListener('click', toggleMenu);
+    hamburger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMenu();
       }
-      form.search-bar {
-        width: 100%;
-      }
-      .hero-overlay h1 {
-        font-size: 2.8rem;
-      }
-      .hero-overlay p {
-        font-size: 1.2rem;
-      }
-      nav.main-menu {
-        gap: 1rem;
-        top: auto;
-        position: relative;
-        justify-content: center;
-      }
-      main#main-content {
-        margin: 1rem 1rem 3rem;
-        padding: 1.5rem 1.5rem;
-      }
-      .cta-button {
-        padding: 0.85rem 2.2rem;
-        font-size: 1.05rem;
-      }
-    }
-  </style>
-</head>
+    });
+  });
+</script>
 
 <body {{ attributes }}>
   <header class="topbar" role="banner">
-    <div class="logo" tabindex="0" aria-label="Varm Öken logotyp">Varm Öken</div>
+    <div class="logo">Varm Öken</div>
 
-    <form class="search-bar" action="/search" method="get" role="search" aria-label="Sök produkter i Varm Öken">
-      <select name="category" aria-label="Välj kategori">
+    <form class="search-bar" action="/search" method="get" role="search">
+      <select name="category">
         <option value="all">Alla kategorier</option>
         <option value="outdoor">Utomhus</option>
         <option value="clothing">Kläder</option>
         <option value="gear">Utrustning</option>
       </select>
-      <input type="text" name="q" placeholder="Sök i Varm Öken" aria-label="Sökfält" />
-      <button type="submit" aria-label="Starta sökning">Sök</button>
+      <input type="text" name="q" placeholder="Sök i Varm Öken" />
+      <button type="submit">Sök</button>
     </form>
+
+    <div class="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <div></div><div></div><div></div>
+    </div>
   </header>
 
-  <nav class="main-menu" role="navigation" aria-label="Huvudmeny">
+  <nav class="main-menu" role="navigation">
     <a href="#main-content">Hem</a>
     <a href="#om-oss">Om oss</a>
     <a href="#kontakt">Kontakt</a>
   </nav>
 
-  <header class="hero-section" role="banner" aria-label="Startsida">
-    <video autoplay muted loop playsinline class="hero-video" aria-hidden="true" tabindex="-1">
+  <header class="hero-section">
+    <video autoplay muted loop playsinline class="hero-video">
       <source src="{{ base_path ~ directory }}/videos/hero.mp4" type="video/mp4" />
-      Din webbläsare stödjer inte videouppspelning.
     </video>
 
     <div class="hero-overlay">
@@ -282,12 +356,11 @@
     </div>
   </header>
 
-  <main id="main-content" tabindex="-1">
+  <main id="main-content">
     {{ page.content }}
   </main>
 
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer">
     <p>&copy; {{ "now"|date("Y") }} Varm Öken – Alla rättigheter förbehållna.</p>
   </footer>
 </body>
-</html>
